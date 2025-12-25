@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thermal Bill Print Demo - Cold Drink Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .demo-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    /* Thermal printer preview */
+    .thermal-preview {
+      background: white;
+      width: 302px; /* 80mm = ~302px at 96 DPI */
+      margin: 20px auto;
+      padding: 20px 16px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .thermal-preview .center {
+      text-align: center;
+    }
+
+    .thermal-preview .bold {
+      font-weight: bold;
+    }
+
+    .thermal-preview .line {
+      border-top: 1px dashed #000;
+      margin: 8px 0;
+    }
+
+    .thermal-preview .item-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 3px 0;
+      font-size: 11px;
+    }
+
+    .thermal-preview .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 6px 0;
+      font-weight: bold;
+    }
+
+    .thermal-preview h2 {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .thermal-preview h3 {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    .thermal-preview p {
+      margin: 3px 0;
+    }
+
+    .thermal-preview .grand-total {
+      font-size: 15px;
+      padding: 8px 0;
+    }
+
+    .thermal-preview .small {
+      font-size: 10px;
+    }
+
+    .button-group {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 0 10px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #5568d3;
+    }
+
+    .btn-secondary {
+      background: #48bb78;
+    }
+
+    .btn-secondary:hover {
+      background: #38a169;
+    }
+
+    .code-section {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-top: 15px;
+    }
+
+    .code-section pre {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .info-box {
+      background: #ebf8ff;
+      border-left: 4px solid #4299e1;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+      color: #2c5282;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .feature-item {
+      background: #f7fafc;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 3px solid #667eea;
+    }
+
+    .feature-item h4 {
+      margin: 0 0 8px 0;
+      color: #2d3748;
+    }
+
+    .feature-item p {
+      margin: 0;
+      color: #4a5568;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="demo-section">
+      <h1>🖨️ Thermal Bill Print Demo</h1>
+      <p class="subtitle">Preview how your bills will look when printed on an 80mm thermal printer</p>
+
+      <div class="info-box">
+        <h3>📋 About Thermal Printing</h3>
+        <p>This demo shows exactly how your bills will appear when printed on a standard 80mm thermal receipt printer (commonly used in retail shops, restaurants, and billing counters).</p>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <h4>✅ 80mm Width</h4>
+          <p>Standard thermal printer paper size</p>
+        </div>
+        <div class="feature-item">
+          <h4>✅ Monospace Font</h4>
+          <p>Perfect alignment for all text and numbers</p>
+        </div>
+        <div class="feature-item">
+          <h4>✅ Auto-Print</h4>
+          <p>Automatically triggers print dialog</p>
+        </div>
+        <div class="feature-item">
+          <h4>✅ Complete Details</h4>
+          <p>All bill info, items, totals, and GST</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2 style="text-align: center; color: #2d3748;">📄 Live Preview</h2>
+      <p style="text-align: center; color: #666;">This is how your thermal bill will look</p>
+
+      <!-- Thermal Print Preview -->
+      <div class="thermal-preview" id="thermalBill">
+        <div class="center">
+          <h2>COLD DRINK SHOP</h2>
+          <p>Fresh & Cool Beverages</p>
+          <p>Contact: 9876543210</p>
+          <p>Address: Shop No. 5, Main Road</p>
+        </div>
+        <div class="line"></div>
+
+        <p><span class="bold">Bill No:</span> 145</p>
+        <p><span class="bold">Date:</span> 18 Nov 2025, 03:45 PM</p>
+        <p><span class="bold">Customer:</span> Rahul Kumar</p>
+        <p><span class="bold">Mobile:</span> 9123456789</p>
+        <p><span class="bold">Cashier:</span> Admin User</p>
+
+        <div class="line"></div>
+
+        <div class="item-row bold" style="border-bottom: 1px solid #000; padding-bottom: 3px;">
+          <span>Item</span>
+          <span>Qty</span>
+          <span>Rate</span>
+          <span>Amount</span>
+        </div>
+
+        <div class="item-row">
+          <span>Lemon Juice</span>
+          <span>3</span>
+          <span>₹25.00</span>
+          <span>₹75.00</span>
+        </div>
+        <div class="item-row">
+          <span>Mango Juice</span>
+          <span>2</span>
+          <span>₹30.00</span>
+          <span>₹60.00</span>
+        </div>
+        <div class="item-row">
+          <span>Cold Coffee</span>
+          <span>1</span>
+          <span>₹45.00</span>
+          <span>₹45.00</span>
+        </div>
+        <div class="item-row">
+          <span>Mineral Water</span>
+          <span>4</span>
+          <span>₹20.00</span>
+          <span>₹80.00</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="total-row">
+          <span>Subtotal:</span>
+          <span>₹260.00</span>
+        </div>
+
+        <div class="total-row">
+          <span>Discount (5%):</span>
+          <span>- ₹13.00</span>
+        </div>
+
+        <div class="total-row">
+          <span>GST (5%):</span>
+          <span>₹12.35</span>
+        </div>
+
+        <div class="total-row">
+          <span>Round Off:</span>
+          <span>+ ₹0.65</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="total-row grand-total" style="border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 8px 0;">
+          <span>GRAND TOTAL:</span>
+          <span>₹260.00</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="total-row" style="font-weight: normal;">
+          <span>Payment Mode:</span>
+          <span class="bold">UPI</span>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="center" style="margin-top: 12px;">
+          <p class="bold">Thank You! Visit Again</p>
+          <p class="small">Have a Great Day!</p>
+          <p class="small" style="margin-top: 8px;">Powered by Cold Drink Billing System</p>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn" onclick="printThermalBill()">🖨️ Test Print</button>
+        <button class="btn btn-secondary" onclick="showCode()">📝 View Code</button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>🔧 How to Use in Your Application</h2>
+      <p>When a user clicks on "Print Bill" in the billing interface, the thermal print function is called:</p>
+
+      <div class="code-section">
+        <pre>// Import the function
+import { printThermalBill } from '../../utils/exportUtils';
+
+// Call it with bill data
+const handlePrintBill = (bill) => {
+  printThermalBill(bill);
+};
+
+// Example bill object:
+const bill = {
+  billNo: 145,
+  billDate: '2025-11-18T15:45:00',
+  customerName: 'Rahul Kumar',
+  customerMobile: '9123456789',
+  userName: 'Admin User',
+  items: [
+    { itemName: 'Lemon Juice', quantity: 3, price: 25, total: 75 },
+    { itemName: 'Mango Juice', quantity: 2, price: 30, total: 60 }
+  ],
+  subtotal: 260,
+  discountPercent: 5,
+  discountAmount: 13,
+  gstAmount: 12.35,
+  roundOff: 0.65,
+  grandTotal: 260,
+  paymentMode: 'UPI'
+};</pre>
+      </div>
+
+      <div class="info-box" style="background: #fffaf0; border-left-color: #ed8936;">
+        <h3>⚙️ Printer Configuration</h3>
+        <p><strong>Compatible with:</strong></p>
+        <ul>
+          <li>Any 80mm thermal receipt printer (ESC/POS compatible)</li>
+          <li>USB thermal printers</li>
+          <li>Bluetooth thermal printers</li>
+          <li>Network (WiFi/Ethernet) thermal printers</li>
+        </ul>
+        <p><strong>Popular brands:</strong> Epson TM-T20, Star TSP100, Bixolon SRP-350, Citizen CT-S310II</p>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>📱 Integration Steps</h2>
+      <ol>
+        <li><strong>Already Done:</strong> The thermal print function is created in <code>exportUtils.js</code></li>
+        <li><strong>Import it:</strong> Add the import in your billing component</li>
+        <li><strong>Add Button:</strong> Add a "Print Bill" button in your billing interface</li>
+        <li><strong>Call Function:</strong> Pass the bill object to <code>printThermalBill(bill)</code></li>
+        <li><strong>Done!</strong> The print dialog will open automatically</li>
+      </ol>
+
+      <div class="info-box" style="background: #f0fff4; border-left-color: #48bb78;">
+        <h3>✨ Features Included</h3>
+        <ul>
+          <li>✅ Shop header with contact details</li>
+          <li>✅ Bill number and date/time</li>
+          <li>✅ Customer information (if available)</li>
+          <li>✅ Itemized list with quantities and amounts</li>
+          <li>✅ Subtotal, discount, GST breakdown</li>
+          <li>✅ Grand total highlighted</li>
+          <li>✅ Payment mode display</li>
+          <li>✅ Thank you message and footer</li>
+          <li>✅ Auto-print on load</li>
+          <li>✅ Auto-close after printing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function printThermalBill() {
+      // Clone the thermal bill preview
+      const billContent = document.getElementById('thermalBill').cloneNode(true);
+
+      // Create a new window for printing
+      const printWindow = window.open('', '_blank', 'width=400,height=600');
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Print Bill #145</title>
+          <style>
+            @media print {
+              @page {
+                size: 80mm auto;
+                margin: 0;
+              }
+            }
+            body {
+              font-family: 'Courier New', monospace;
+              font-size: 12px;
+              margin: 0;
+              padding: 5mm;
+              width: 70mm;
+              line-height: 1.4;
+            }
+            .center { text-align: center; }
+            .bold { font-weight: bold; }
+            .line { border-top: 1px dashed #000; margin: 8px 0; }
+            .item-row { display: flex; justify-content: space-between; margin: 3px 0; font-size: 11px; }
+            .total-row { display: flex; justify-content: space-between; margin: 6px 0; font-weight: bold; }
+            .grand-total { font-size: 15px; padding: 8px 0; border-top: 2px solid #000; border-bottom: 2px solid #000; }
+            .small { font-size: 10px; }
+            h2 { margin: 5px 0; font-size: 16px; }
+            p { margin: 3px 0; }
+          </style>
+        </head>
+        <body>
+          ${billContent.innerHTML}
+          <script>
+            window.onload = function() {
+              window.print();
+              setTimeout(() => window.close(), 1000);
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+
+      printWindow.document.close();
+    }
+
+    function showCode() {
+      alert('The thermal print code is available in:\nfrontend/src/utils/exportUtils.js\n\nFunction name: printThermalBill()\n\nScroll down to see the usage example!');
+    }
+  </script>
+</body>
+</html>

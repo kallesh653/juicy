@@ -1,0 +1,26 @@
+{
+  "orderType": "Dine-In",
+  "tableId": "69248fc55e35ea077784a9c6",
+  "customerName": "Walk-in Customer",
+  "customerMobile": "",
+  "guestCount": 1,
+  "items": [
+    {
+      "subCode": "692496c2d8e15600fb2dad4d",
+      "itemName": "leamon juce",
+      "quantity": 2,
+      "unit": "Piece",
+      "price": 100,
+      "itemTotal": 200
+    }
+  ],
+  "subtotal": 200,
+  "discountPercent": 0,
+  "discountAmount": 0,
+  "gstAmount": 0,
+  "totalAmount": 200,
+  "roundOff": 0,
+  "grandTotal": 200,
+  "remarks": "",
+  "specialInstructions": ""
+}

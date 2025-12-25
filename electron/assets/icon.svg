@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="50%" style="stop-color:#764ba2"/>
+      <stop offset="100%" style="stop-color:#f093fb"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e8e8e8"/>
+    </linearGradient>
+    <linearGradient id="liquid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd93d"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <circle cx="128" cy="128" r="120" fill="url(#bg)"/>
+  <!-- Glass -->
+  <path d="M78 55 L178 55 L168 200 Q128 220 88 200 Z" fill="url(#glass)" opacity="0.95"/>
+  <!-- Liquid -->
+  <path d="M85 90 L171 90 L163 195 Q128 210 93 195 Z" fill="url(#liquid)" opacity="0.9"/>
+  <!-- Glass rim -->
+  <ellipse cx="128" cy="55" rx="50" ry="12" fill="white"/>
+  <!-- Bubbles -->
+  <circle cx="108" cy="130" r="8" fill="white" opacity="0.6"/>
+  <circle cx="140" cy="155" r="5" fill="white" opacity="0.5"/>
+  <circle cx="120" cy="175" r="6" fill="white" opacity="0.4"/>
+  <!-- Straw -->
+  <rect x="138" y="30" width="10" height="115" rx="5" fill="#ff6b6b" transform="rotate(12 143 90)"/>
+  <!-- Lime slice -->
+  <circle cx="175" cy="72" r="20" fill="#7bed9f"/>
+  <circle cx="175" cy="72" r="15" fill="#2ed573"/>
+  <path d="M175 57 L175 87 M160 72 L190 72" stroke="#7bed9f" stroke-width="3"/>
+</svg>

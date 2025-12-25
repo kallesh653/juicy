@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MjM3NjhiZGY1YmZmNjNlMDEzMzA0ZiIsImlhdCI6MTc2NDA1NzMyNiwiZXhwIjoxNzY2NjQ5MzI2fQ.4vkNycPbHcbnOy7FOH88ex7AI1-sZ3gufAcHwmfVqx0\":*)",
+      "Bash(curl:*)",
+      "Bash(npm run seed:*)",
+      "Bash(if exist .git rmdir /s /q .git)",
+      "Bash(ssh -o StrictHostKeyChecking=no root@72.61.238.39 \"pwd && ls -la\")",
+      "Bash(ssh -o StrictHostKeyChecking=no root@72.61.238.39 \"cd /root/juicy/frontend/src/services && cat api.js | head -30\")",
+      "Bash(ssh -o StrictHostKeyChecking=no root@72.61.238.39 \"cd /root/juicy/frontend/src/services && cat api.js\")",
+      "Bash(ssh -o StrictHostKeyChecking=no root@72.61.238.39 \"cd /root/juicy/backend/routes && cat subCodeRoutes.js | head -15\")",
+      "Bash(ssh -o StrictHostKeyChecking=no root@72.61.238.39 \"cd /root/juicy/frontend && tar -xzf dist-complete.tar.gz && rm -rf /var/www/juicy/* && cp -r dist/* /var/www/juicy/ && echo ''=== DEPLOYMENT COMPLETE ==='' && echo ''New JS bundle:'' && ls -lh /var/www/juicy/assets/*.js | tail -1\")",
+      "Bash(ssh:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
